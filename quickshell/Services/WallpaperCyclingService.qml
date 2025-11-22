@@ -37,7 +37,6 @@ Singleton {
             property string targetScreenName: ""
             property string currentWallpaper: ""
             property bool goToPrevious: false
-            property bool randomize: true
             running: false
             stdout: StdioCollector {
                 onStreamFinished: {
@@ -49,9 +48,10 @@ Singleton {
                         let currentIndex = wallpaperList.findIndex(path => path === currentPath)
                         if (currentIndex === -1) currentIndex = 0
                         let targetIndex
+                        var settings = SessionData.getMonitorCyclingSettings(screenName)
                         if (goToPrevious) {
                             targetIndex = currentIndex === 0 ? wallpaperList.length - 1 : currentIndex - 1
-                        } else if (randomize) {
+                        } else if (settings.randomize) {
                             targetIndex = Math.floor(Math.random() * wallpaperList.length)
                         } else {
                             targetIndex = (currentIndex + 1) % wallpaperList.length
@@ -373,7 +373,6 @@ Singleton {
 
         property string targetScreenName: ""
         property string currentWallpaper: ""
-        property bool randomize: true
 
         running: false
 
@@ -391,7 +390,8 @@ Singleton {
 
                 let nextIndex = 0
 
-                if (randomize) {
+                var settings = SessionData.getMonitorCyclingSettings(screenName)
+                if (settings.randomize) {
                     nextIndex = Math.floor(Math.random() * wallpaperList.length)
                 } else {
                     nextIndex = (currentIndex + 1) % wallpaperList.length
