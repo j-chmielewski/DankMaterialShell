@@ -2,6 +2,7 @@ pragma Singleton
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QRandomGenerator
 import Quickshell
 import Quickshell.Io
 import qs.Common
@@ -370,29 +371,67 @@ Singleton {
 
         property string targetScreenName: ""
         property string currentWallpaper: ""
+        property bool random: true
 
         running: false
 
+        // stdout: StdioCollector {
+        //     onStreamFinished: {
+        //         if (text && text.trim()) {
+        //             const files = text.trim().split('\n').filter(file => file.length > 0)
+        //             if (files.length <= 1) return
+
+        //             const wallpaperList = files.sort()
+        //             const currentPath = cyclingProcess.currentWallpaper
+        //             let currentIndex = wallpaperList.findIndex(path => path === currentPath)
+        //             if (currentIndex === -1) currentIndex = 0
+
+        //             if (random) {
+        //                 let randomGenerator = QRandomGenerator()
+        //                 const nextIndex = randomGenerator.bounded(files.length)
+        //             } else {
+        //                 const nextIndex = (currentIndex + 1) % wallpaperList.length
+        //             }
+
+        //             const nextWallpaper = wallpaperList[nextIndex]
+
+        //             if (nextWallpaper && nextWallpaper !== currentPath) {
+        //                 if (cyclingProcess.targetScreenName) {
+        //                     SessionData.setMonitorWallpaper(cyclingProcess.targetScreenName, nextWallpaper)
+        //                 } else {
+        //                     SessionData.setWallpaper(nextWallpaper)
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stdout: StdioCollector {
             onStreamFinished: {
-                if (text && text.trim()) {
-                    const files = text.trim().split('\n').filter(file => file.length > 0)
-                    if (files.length <= 1) return
+                if (!text) return
 
-                    const wallpaperList = files.sort()
-                    const currentPath = cyclingProcess.currentWallpaper
-                    let currentIndex = wallpaperList.findIndex(path => path === currentPath)
-                    if (currentIndex === -1) currentIndex = 0
+                const files = text.trim().split('\n').filter(f => f.length > 0)
+                if (files.length < 1) return
 
-                    const nextIndex = (currentIndex + 1) % wallpaperList.length
-                    const nextWallpaper = wallpaperList[nextIndex]
+                const wallpaperList = files.sort()
+                const currentPath = cyclingProcess.currentWallpaper
+                let currentIndex = wallpaperList.indexOf(currentPath)
+                if (currentIndex === -1) currentIndex = 0
 
-                    if (nextWallpaper && nextWallpaper !== currentPath) {
-                        if (cyclingProcess.targetScreenName) {
-                            SessionData.setMonitorWallpaper(cyclingProcess.targetScreenName, nextWallpaper)
-                        } else {
-                            SessionData.setWallpaper(nextWallpaper)
-                        }
+                let nextIndex = 0
+
+                if (cyclingProcess.random) {
+                    nextIndex = Math.floor(Math.random() * wallpaperList.length)
+                } else {
+                    nextIndex = (currentIndex + 1) % wallpaperList.length
+                }
+
+                const nextWallpaper = wallpaperList[nextIndex]
+
+                if (nextWallpaper && nextWallpaper !== currentPath) {
+                    if (cyclingProcess.targetScreenName) {
+                        SessionData.setMonitorWallpaper(cyclingProcess.targetScreenName, nextWallpaper)
+                    } else {
+                        SessionData.setWallpaper(nextWallpaper)
                     }
                 }
             }
