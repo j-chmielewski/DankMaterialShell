@@ -632,7 +632,8 @@ Singleton {
                 "enabled": false,
                 "mode": "interval",
                 "interval": 300,
-                "time": "06:00"
+                "time": "06:00",
+                "randomize": false
             }
         }
         newSettings[identifier].mode = mode
@@ -670,7 +671,8 @@ Singleton {
                 "enabled": false,
                 "mode": "interval",
                 "interval": 300,
-                "time": "06:00"
+                "time": "06:00",
+                "randomize": false
             }
         }
         newSettings[identifier].interval = interval
@@ -708,7 +710,8 @@ Singleton {
                 "enabled": false,
                 "mode": "interval",
                 "interval": 300,
-                "time": "06:00"
+                "time": "06:00",
+                "randomize": false
             }
         }
         newSettings[identifier].time = time
@@ -977,7 +980,8 @@ Singleton {
                 "enabled": false,
                 "mode": "interval",
                 "interval": 300,
-                "time": "06:00"
+                "time": "06:00",
+                "randomize": false
             }
         }
 
@@ -992,7 +996,8 @@ Singleton {
             "enabled": false,
             "mode": "interval",
             "interval": 300,
-            "time": "06:00"
+            "time": "06:00",
+            "randomize": false
         }
     }
 
