@@ -1157,20 +1157,13 @@ Item {
 
 
                             Row {
-                                width: parent.width - Theme.iconSize - Theme.spacingM - randomOrderToggle.width - Theme.spacingM
+                                width: parent.width
                                 spacing: Theme.spacingM
 
-                                // DankIcon {
-                                //     name: "schedule"
-                                //     size: Theme.iconSize
-                                //     color: SessionData.wallpaperCyclingEnabled ? Theme.primary : Theme.surfaceVariantText
-                                //     anchors.verticalCenter: parent.verticalCenter
-                                // }
-
                                 Column {
-                                    width: parent.width - parent.leftPadding
-                                    spacing: Theme.spacingM
-                                    // anchors.verticalCenter: parent.verticalCenter
+                                    width: parent.width - Theme.iconSize - Theme.spacingM - randomOrderToggle.width - Theme.spacingM
+                                    spacing: Theme.spacingXS
+                                    anchors.verticalCenter: parent.verticalCenter
 
                                     StyledText {
                                         text: I18n.tr("Random order")
