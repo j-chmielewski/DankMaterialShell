@@ -1169,7 +1169,7 @@ Item {
 
                                 Column {
                                     width: parent.width - parent.leftPadding
-                                    spacing: Theme.spacingL
+                                    spacing: Theme.spacingM
                                     // anchors.verticalCenter: parent.verticalCenter
 
                                     StyledText {
@@ -1191,7 +1191,7 @@ Item {
                                     id: randomOrderToggle
 
                                     anchors.verticalCenter: parent.verticalCenter
-                                    checked: SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).randomize : SessionData.wallpaperCyclingEnabled
+                                    checked: SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).randomize : SessionData.wallpaperCyclingRandomized
                                     onToggled: toggled => {
                                                    if (SessionData.perMonitorWallpaper) {
                                                        return SessionData.setMonitorCyclingRandomized(selectedMonitorName, toggled)
@@ -1204,7 +1204,7 @@ Item {
                                         target: personalizationTab
                                         function onSelectedMonitorNameChanged() {
                                             randomOrderToggle.checked = Qt.binding(() => {
-                                                                                   return SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).enabled : SessionData.wallpaperCyclingEnabled
+                                                                                   return SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).randomize : SessionData.wallpaperCyclingRandomized
                                                                                })
                                         }
                                     }
