@@ -1152,6 +1152,68 @@ Item {
                             visible: SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).enabled : SessionData.wallpaperCyclingEnabled
                             leftPadding: Theme.iconSize + Theme.spacingM
 
+
+
+
+
+                            Row {
+                                width: parent.width
+                                spacing: Theme.spacingM
+
+                                // DankIcon {
+                                //     name: "schedule"
+                                //     size: Theme.iconSize
+                                //     color: SessionData.wallpaperCyclingEnabled ? Theme.primary : Theme.surfaceVariantText
+                                //     anchors.verticalCenter: parent.verticalCenter
+                                // }
+
+                                Column {
+                                    width: parent.width - parent.leftPadding
+                                    spacing: Theme.spacingL
+                                    // anchors.verticalCenter: parent.verticalCenter
+
+                                    StyledText {
+                                        text: I18n.tr("Random order")
+                                        font.pixelSize: Theme.fontSizeLarge
+                                        font.weight: Font.Medium
+                                        color: Theme.surfaceText
+                                    }
+
+                                    StyledText {
+                                        text: I18n.tr("Choose the next wallpaper randomly")
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceVariantText
+                                        width: parent.width
+                                    }
+                                }
+
+                                DankToggle {
+                                    id: randomOrderToggle
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    checked: SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).randomize : SessionData.wallpaperCyclingEnabled
+                                    onToggled: toggled => {
+                                                   if (SessionData.perMonitorWallpaper) {
+                                                       return SessionData.setMonitorCyclingRandomized(selectedMonitorName, toggled)
+                                                   } else {
+                                                       return SessionData.setWallpaperCyclingRandomized(toggled)
+                                                   }
+                                               }
+
+                                    Connections {
+                                        target: personalizationTab
+                                        function onSelectedMonitorNameChanged() {
+                                            cyclingToggle.checked = Qt.binding(() => {
+                                                                                   return SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).enabled : SessionData.wallpaperCyclingEnabled
+                                                                               })
+                                        }
+                                    }
+                                }
+                            }
+
+
+
+
                             Row {
                                 spacing: Theme.spacingL
                                 width: parent.width - parent.leftPadding

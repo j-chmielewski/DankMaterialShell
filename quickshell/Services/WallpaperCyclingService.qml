@@ -37,7 +37,7 @@ Singleton {
             property string targetScreenName: ""
             property string currentWallpaper: ""
             property bool goToPrevious: false
-            property bool random: true
+            property bool randomize: true
             running: false
             stdout: StdioCollector {
                 onStreamFinished: {
@@ -51,7 +51,7 @@ Singleton {
                         let targetIndex
                         if (goToPrevious) {
                             targetIndex = currentIndex === 0 ? wallpaperList.length - 1 : currentIndex - 1
-                        } else if (random) {
+                        } else if (randomize) {
                             targetIndex = Math.floor(Math.random() * wallpaperList.length)
                         } else {
                             targetIndex = (currentIndex + 1) % wallpaperList.length
@@ -373,40 +373,10 @@ Singleton {
 
         property string targetScreenName: ""
         property string currentWallpaper: ""
-        property bool random: true
+        property bool randomize: true
 
         running: false
 
-        // stdout: StdioCollector {
-        //     onStreamFinished: {
-        //         if (text && text.trim()) {
-        //             const files = text.trim().split('\n').filter(file => file.length > 0)
-        //             if (files.length <= 1) return
-
-        //             const wallpaperList = files.sort()
-        //             const currentPath = cyclingProcess.currentWallpaper
-        //             let currentIndex = wallpaperList.findIndex(path => path === currentPath)
-        //             if (currentIndex === -1) currentIndex = 0
-
-        //             if (random) {
-        //                 let randomGenerator = QRandomGenerator()
-        //                 const nextIndex = randomGenerator.bounded(files.length)
-        //             } else {
-        //                 const nextIndex = (currentIndex + 1) % wallpaperList.length
-        //             }
-
-        //             const nextWallpaper = wallpaperList[nextIndex]
-
-        //             if (nextWallpaper && nextWallpaper !== currentPath) {
-        //                 if (cyclingProcess.targetScreenName) {
-        //                     SessionData.setMonitorWallpaper(cyclingProcess.targetScreenName, nextWallpaper)
-        //                 } else {
-        //                     SessionData.setWallpaper(nextWallpaper)
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
         stdout: StdioCollector {
             onStreamFinished: {
                 if (!text) return
@@ -421,7 +391,7 @@ Singleton {
 
                 let nextIndex = 0
 
-                if (cyclingProcess.random) {
+                if (randomize) {
                     nextIndex = Math.floor(Math.random() * wallpaperList.length)
                 } else {
                     nextIndex = (currentIndex + 1) % wallpaperList.length
