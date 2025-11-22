@@ -37,6 +37,7 @@ Singleton {
             property string targetScreenName: ""
             property string currentWallpaper: ""
             property bool goToPrevious: false
+            property bool random: true
             running: false
             stdout: StdioCollector {
                 onStreamFinished: {
@@ -50,6 +51,8 @@ Singleton {
                         let targetIndex
                         if (goToPrevious) {
                             targetIndex = currentIndex === 0 ? wallpaperList.length - 1 : currentIndex - 1
+                        } else if (random) {
+                            targetIndex = Math.floor(Math.random() * wallpaperList.length)
                         } else {
                             targetIndex = (currentIndex + 1) % wallpaperList.length
                         }
