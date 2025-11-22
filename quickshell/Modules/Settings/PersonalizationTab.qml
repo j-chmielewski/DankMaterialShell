@@ -1203,7 +1203,7 @@ Item {
                                     Connections {
                                         target: personalizationTab
                                         function onSelectedMonitorNameChanged() {
-                                            cyclingToggle.checked = Qt.binding(() => {
+                                            randomOrderToggle.checked = Qt.binding(() => {
                                                                                    return SessionData.perMonitorWallpaper ? SessionData.getMonitorCyclingSettings(selectedMonitorName).enabled : SessionData.wallpaperCyclingEnabled
                                                                                })
                                         }
