@@ -1157,7 +1157,7 @@ Item {
 
 
                             Row {
-                                width: parent.width
+                                width: parent.width - Theme.iconSize - Theme.spacingM - randomOrderToggle.width - Theme.spacingM
                                 spacing: Theme.spacingM
 
                                 // DankIcon {
